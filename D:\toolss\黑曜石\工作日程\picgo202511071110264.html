@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>冬至弹窗</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #4a6fa5;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .start-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .start-btn:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        .message {
+            margin: 10px 0;
+            font-size: 1.1em;
+            color: #5a5a5a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💕 冬至 💕</h1>
+        <p class="message">点击下方按钮开始接收关心</p>
+        <button class="start-btn" onclick="startMessages()">开始关心</button>
+    </div>
+
+    <script>
+        const messages = [
+            "今天也要开心哦！",
+            "记得多喝水，保持身体健康",
+            "你很棒，继续加油！",
+            "有什么烦恼都可以和我说",
+            "你的笑容是最美的风景",
+            "愿你每天都有好心情",
+            "注意休息，别太累了",
+            "相信自己，你可以的！",
+            "今天天气不错，适合晒太阳",
+            "你值得被温柔以待",
+            "愿你被世界温柔相待",
+            "每天都是新的开始",
+            "希望你永远快乐",
+            "你是最棒的！",
+            "记得按时吃饭哦",
+            "愿你有好运气",
+            "生活虽然有时艰难，但你很坚强",
+            "你的努力我都看在眼里",
+            "今天也要对自己好一点",
+            "愿你被爱包围"
+        ];
+        
+        let messageCount = 0;
+        const maxMessages = 10; // 最多显示10个弹窗
+        
+        function showRandomMessage() {
+            if (messageCount >= maxMessages) return;
+            
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            const message = messages[randomIndex];
+            
+            // 创建弹窗
+            const popup = document.createElement('div');
+            popup.style.position = 'fixed';
+            popup.style.left = Math.random() * (window.innerWidth - 300) + 'px';
+            popup.style.top = Math.random() * (window.innerHeight - 150) + 'px';
+            popup.style.width = '250px';
+            popup.style.padding = '15px';
+            popup.style.backgroundColor = '#ffebee';
+            popup.style.border = '2px solid #f8bbd0';
+            popup.style.borderRadius = '10px';
+            popup.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+            popup.style.zIndex = '10000';
+            popup.style.textAlign = 'center';
+            popup.style.fontSize = '16px';
+            popup.style.color = '#d81b60';
+            popup.style.fontWeight = 'bold';
+            popup.style.cursor = 'pointer';
+            popup.style.transition = 'all 0.3s ease';
+            
+            popup.innerHTML = `
+                <div style="margin: 10px;">${message}</div>
+                <div style="font-size: 12px; color: #999; margin-top: 8px;">点击关闭</div>
+            `;
+            
+            // 添加关闭功能
+            popup.onclick = function() {
+                this.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(this);
+                }, 300);
+            };
+            
+            document.body.appendChild(popup);
+            
+            // 随机移动动画
+            setTimeout(() => {
+                popup.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    popup.style.transform = 'translateY(0)';
+                }, 300);
+            }, 10);
+            
+            messageCount++;
+            
+            // 继续显示更多弹窗
+            if (messageCount < maxMessages) {
+                setTimeout(showRandomMessage, 800);
+            }
+        }
+        
+        function startMessages() {
+            // 先显示一个弹窗
+            showRandomMessage();
+            
+            // 然后每隔一段时间显示新的弹窗
+            const interval = setInterval(() => {
+                if (messageCount < maxMessages) {
+                    showRandomMessage();
+                } else {
+                    clearInterval(interval);
+                }
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
+
+
+
